@@ -1,17 +1,17 @@
 <script>
   import Radio from './Radio.svelte'
-    export let rows = 96;
+    export let rows = 60;
     export let cols = 7;
     export let title = 'Find Some Time';
     let radioValue;
     export let timeSlots = [
-      { day: 'Monday', start: '00:00', end: '23:59' },
-      { day: 'Tuesday', start: '00:00', end: '23:59' },
-      { day: 'Wednesday', start: '00:00', end: '23:59' },
-      { day: 'Thursday', start: '00:00', end: '23:59' },
-      { day: 'Friday', start: '00:00', end: '23:59' },
-      { day: 'Saturday', start: '00:00', end: '23:59' },
-      { day: 'Sunday', start: '00:00', end: '23:59' }
+      { day: 'Monday', start: '9:00', end: '23:59' },
+      { day: 'Tuesday', start: '9:00', end: '23:59' },
+      { day: 'Wednesday', start: '9:00', end: '23:59' },
+      { day: 'Thursday', start: '9:00', end: '23:59' },
+      { day: 'Friday', start: '9:00', end: '23:59' },
+      { day: 'Saturday', start: '9:00', end: '23:59' },
+      { day: 'Sunday', start: '9:00', end: '23:59' }
     ];
     export let availability = Array.from({ length: rows }, () =>
       Array.from({ length: cols }, () => [false, radioValue])
