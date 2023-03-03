@@ -1,0 +1,84 @@
+<script>
+    export let rows = 96;
+    export let cols = 7;
+    export let title = 'Find Some Time';
+    export let timeSlots = [
+      { day: 'Monday', start: '00:00', end: '23:59' },
+      { day: 'Tuesday', start: '00:00', end: '23:59' },
+      { day: 'Wednesday', start: '00:00', end: '23:59' },
+      { day: 'Thursday', start: '00:00', end: '23:59' },
+      { day: 'Friday', start: '00:00', end: '23:59' },
+      { day: 'Saturday', start: '00:00', end: '23:59' },
+      { day: 'Sunday', start: '00:00', end: '23:59' }
+    ];
+    export let availability = Array.from({ length: rows }, () =>
+      Array.from({ length: cols }, () => false)
+    );
+  
+    function toggleAvailability(row, col) {
+      availability[row][col] = !availability[row][col];
+      availability = [...availability];
+    }
+  
+    function incrementTime(time, minutes) {
+      let [hours, mins] = time.split(':').map(Number);
+      mins += minutes;
+      hours += Math.floor(mins / 60);
+      mins %= 60;
+      return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+    }
+  </script>
+  
+  <h1>{title}</h1>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        {#each timeSlots as { day }}
+        <th>{day}</th>
+        {/each}
+      </tr>
+    </thead>
+    <tbody>
+      {#each Array(rows) as _, row}
+      <tr>
+        <td>{incrementTime(timeSlots[0].start, row * 15)}</td>
+        {#each Array(cols) as _, col}
+        <td>
+          <button
+            on:click={() => toggleAvailability(row, col)}
+            class:available={availability[row][col]}
+          ></button>
+        </td>
+        {/each}
+      </tr>
+      {/each}
+      <tr>
+        <td></td>
+        {#each timeSlots as { day, start }}
+        <td>{start} - {incrementTime(start, 60 * rows)}</td>
+        {/each}
+      </tr>
+    </tbody>
+  </table>
+  
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+    td {
+      border: 1px solid rgb(75, 75, 75);
+      padding: 5px;
+      text-align: center;
+    }
+    button {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: white;
+    }
+    button.available {
+      background-color: green;
+    }
+  </style>
+  
