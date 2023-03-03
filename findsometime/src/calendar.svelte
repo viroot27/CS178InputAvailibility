@@ -42,6 +42,9 @@
 	}, {
 		value: 'blue',
 		label: 'In Zooom only',
+  }, {
+		value: 'yellow',
+		label: 'Only if necessary',
 	}]
 
   </script>
