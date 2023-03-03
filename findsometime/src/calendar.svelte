@@ -1,7 +1,9 @@
 <script>
+  import Radio from './Radio.svelte'
     export let rows = 96;
     export let cols = 7;
     export let title = 'Find Some Time';
+    let radioValue;
     export let timeSlots = [
       { day: 'Monday', start: '00:00', end: '23:59' },
       { day: 'Tuesday', start: '00:00', end: '23:59' },
@@ -12,11 +14,16 @@
       { day: 'Sunday', start: '00:00', end: '23:59' }
     ];
     export let availability = Array.from({ length: rows }, () =>
-      Array.from({ length: cols }, () => false)
+      Array.from({ length: cols }, () => [false, radioValue])
     );
-  
+    //If radio value is selected do the radio value color, if not do white
     function toggleAvailability(row, col) {
-      availability[row][col] = !availability[row][col];
+      availability[row][col][0] = !availability[row][col][0];
+      if (availability[row][col][0]){
+        (availability[row][col][1]) = radioValue
+      }else{
+        availability[row][col][1] = "white"
+      }
       availability = [...availability];
     }
   
@@ -27,9 +34,20 @@
       mins %= 60;
       return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
     }
+
+	
+	const options = [{
+		value: 'green',
+		label: 'In Person',
+	}, {
+		value: 'blue',
+		label: 'In Zooom only',
+	}]
+
   </script>
   
   <h1>{title}</h1>
+  <Radio {options} fontSize={16} legend='Select availability in' bind:userSelected={radioValue}/>
   <table>
     <thead>
       <tr>
@@ -47,7 +65,7 @@
         <td>
           <button
             on:click={() => toggleAvailability(row, col)}
-            class:available={availability[row][col]}
+            style="background-color:{availability[row][col][1]}"
           ></button>
         </td>
         {/each}
@@ -63,6 +81,7 @@
   </table>
   
   <style>
+    
     table {
       border-collapse: collapse;
     }
@@ -77,8 +96,6 @@
       border: none;
       background-color: white;
     }
-    button.available {
-      background-color: green;
-    }
+
   </style>
   
