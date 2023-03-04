@@ -48,6 +48,7 @@
 
   .legend {
     font-weight: bold;
+    text-align: initial;
   }
   label {
     user-select: none;
