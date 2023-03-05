@@ -52,7 +52,7 @@ let isSubmitted = false
   
     export let rows = 21;
     export let cols = 7;
-    export let title = 'Find Some Time';
+    export let title = 'MeetMe';
     let radioValue;
     export let timeSlots = [
       { day: 'Monday', start: '9:00', end: '19:00' },
@@ -93,13 +93,13 @@ let isSubmitted = false
 	
 	const options = [{
 		value: 'green',
-		label: 'In Person (Green)',
+		label: 'In Person (Shows in Green)',
 	}, {
-		value: 'yellow',
-		label: 'Restricted location (yellow)',
-  }, {
 		value: 'blue',
-		label: 'In Zooom only (in blue)',
+		label: 'In Zoom (Blue)',
+  }, {
+		value: 'yellow',
+		label: 'Restricted Location (Yellow)',
 	}]
 
   //finished function with help from ChatGPT
@@ -122,12 +122,9 @@ let isSubmitted = false
     }
   }
 
-  </script>
-  
+  </script> 
   <h1>{title}</h1>
  
-  
-
   <form on:submit|preventDefault={submitForm} style="white-space:nowrap">
     <label for="name-input">Name:</label>
     <input type="text" id="name-input" bind:value={name}>
@@ -137,7 +134,12 @@ let isSubmitted = false
   <p> Hello {name} :)</p>
   {/if}
   
-  <Radio {options} fontSize={16} legend='Preference for time slots:' bind:userSelected={radioValue}/>
+  <Radio {options} fontSize={16} legend='Location Preference for Time Slots:' bind:userSelected={radioValue}/>
+  <form on:submit|preventDefault={submitForm} class="smallForm" style="white-space:nowrap">
+    <label for="location" >Suggest Location:</label>
+    <input type="text" id="location" >
+    <button type="submit" class="smallButton">Submit</button>
+  </form>
   <table>
     <thead>
       <tr>
@@ -187,10 +189,17 @@ let isSubmitted = false
       border: none;
       background-color: white;
     }
+    .smallButton {
+      width: 100px;
+      height: 35px;
+    }
 
     th{
       width:100px;
     }
 
+    .smallForm{
+      text-align: left;
+    }
   </style>
   
