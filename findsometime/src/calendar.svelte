@@ -1,15 +1,11 @@
 <script>
   import Radio from './Radio.svelte'
 
-  // // loclal storage
-  // import NameInput from './NameInput.svelte';
-  
-  // let name = localStorage.getItem('name');
 
   // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "Firebase/auth";
-import { collection, doc, getFirestore } from "Firebase/firestore/lite";
+import { collection, doc, setDoc, getFirestore, updateDoc } from "Firebase/firestore/lite";
 
 import 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
@@ -32,17 +28,25 @@ const app = initializeApp(firebaseConfig);
 let db = getFirestore(app);
 //  intialize username
 let name = "";
+let isSubmitted = false
 
-//  username function
-function submitForm() {
-  console.log("Nico")
-  const db=getDatabase();
-  set(ref(db,'users/' + name),{
-    });
+//  username function with the help of chat GPT
+  function submitForm() {
+   setDoc(doc(db, 'user/'+name), {
+    start_time : new Date(),
+  })
+  
+  .then(() => {
+    console.log("succesful")
+    document.getElementById("name-input").value = "";
+    isSubmitted = true
+  })
+  .catch((error) => {
+    console.log("unsucess")
   }
 
-  
-
+  )
+}
 
    
   
@@ -64,6 +68,7 @@ function submitForm() {
     );
     //If radio value is selected do the radio value color, if not do white
     function toggleAvailability(row, col) {
+      if (name != ""){
       availability[row][col][0] = !availability[row][col][0];
       if (availability[row][col][0]){
         (availability[row][col][1]) = radioValue
@@ -71,7 +76,11 @@ function submitForm() {
         availability[row][col][1] = "white"
       }
       availability = [...availability];
+    }else{
+      alert("Please enter your name first")
     }
+  }
+    
   
     function incrementTime(time, minutes) {
       let [hours, mins] = time.split(':').map(Number);
@@ -84,30 +93,51 @@ function submitForm() {
 	
 	const options = [{
 		value: 'green',
-		label: 'In Person',
+		label: 'In Person (Green)',
 	}, {
+		value: 'yellow',
+		label: 'Restricted location (yellow)',
+  }, {
 		value: 'blue',
-		label: 'In Zooom only',
+		label: 'In Zooom only (in blue)',
 	}]
+
+  //finished function with help from ChatGPT
+  function finish(){
+    if (name != ""){
+      const ref = doc(db, "user", name)
+
+      updateDoc(ref, {
+        "end_time": new Date()
+      })
+
+      isSubmitted = false
+
+      availability = Array.from({length: rows}, () =>
+        Array.from({length: cols }, () => [false,"white"])
+
+      );
+
+
+    }
+  }
 
   </script>
   
   <h1>{title}</h1>
  
-  <!--local storage stuff-->  
-  <!-- {#if name}
-  <p>Hello {name}!</p>
-  {:else}
-  <NameInput />
-  {/if} -->
+  
 
   <form on:submit|preventDefault={submitForm} style="white-space:nowrap">
-    <label for="name-input">Enter your name:</label>
+    <label for="name-input">Name:</label>
     <input type="text" id="name-input" bind:value={name}>
     <button type="submit" style="width:auto">Submit</button>
   </form>
-
-  <Radio {options} fontSize={16} legend='Location:' bind:userSelected={radioValue}/>
+  {#if isSubmitted}
+  <p> Hello {name} :)</p>
+  {/if}
+  
+  <Radio {options} fontSize={16} legend='Preference for time slots:' bind:userSelected={radioValue}/>
   <table>
     <thead>
       <tr>
@@ -139,6 +169,7 @@ function submitForm() {
       </tr>
     </tbody>
   </table>
+  <button style="width:auto" on:click={finish}>Finish</button>
   
   <style>
     
