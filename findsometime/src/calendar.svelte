@@ -149,7 +149,7 @@ let isSubmitted = false
   <form on:submit|preventDefault={submitForm} on:keydown={submitEnter} style="white-space:nowrap">
     <label for="name-input">Name:</label>
     <input type="text" id="name-input" bind:value={name}>
-    <button type="submit" style="width:auto">Begin</button>
+    <button type="submit" class="smallButton">Begin</button>
   </form>
   {#if isSubmitted}
   <p> Hello {name} :)</p>
@@ -206,15 +206,15 @@ let isSubmitted = false
       text-align: center
     }
     button {
-      width: 100%;
-      height: 100%;
+      width: 110px;
+      height: 30px;
       border: none;
       background-color: white;
     }
 
     .smallButton {
-      width: 100%;
-      height: 100%;
+      width: 80px;
+      height: 40px;
       border: none;
       background-color: white;
       text-align: left;
