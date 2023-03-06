@@ -48,6 +48,12 @@ let isSubmitted = false
   )
 }
 
+  function submitEnter(event) {
+    if (event.key === "Enter") {
+      submitForm();
+    }
+  }
+
    
   
     export let rows = 21;
@@ -93,14 +99,29 @@ let isSubmitted = false
 	
 	const options = [{
 		value: 'green',
-		label: 'In Person (Shows in Green)',
+		label: 'Anywhere In Person (Shows in Green)',
 	}, {
 		value: 'blue',
-		label: 'In Zoom (Blue)',
+		label: 'On Zoom only (Blue)',
   }, {
-		value: 'yellow',
-		label: 'Restricted Location (Yellow)',
-	}]
+		value: 'purple',
+		label: 'SEC only (Purple)',
+	}, {
+    value: 'crimson',
+    label: 'Harvard Square only (Crimson)',
+  }, {
+    value: 'pink',
+    label: 'Quad only (Pink)',
+  }, {
+    value: 'orange',
+    label: 'Maxwell Dworkin only (Orange)',
+  }
+  // , {
+  //   value: 'yellow',
+  //   label: 'Other (yellow)',
+  // }
+  
+]
 
   //finished function with help from ChatGPT
   function finish(){
@@ -125,21 +146,22 @@ let isSubmitted = false
   </script> 
   <h1>{title}</h1>
  
-  <form on:submit|preventDefault={submitForm} style="white-space:nowrap">
+  <form on:submit|preventDefault={submitForm} on:keydown={submitEnter} style="white-space:nowrap">
     <label for="name-input">Name:</label>
     <input type="text" id="name-input" bind:value={name}>
-    <button type="submit" style="width:auto">Submit</button>
+    <button type="submit" style="width:auto">Begin</button>
   </form>
   {#if isSubmitted}
   <p> Hello {name} :)</p>
   {/if}
   
   <Radio {options} fontSize={16} legend='Location Preference for Time Slots:' bind:userSelected={radioValue}/>
-  <form on:submit|preventDefault={submitForm} class="smallForm" style="white-space:nowrap">
+  <!-- <form on:submit|preventDefault={submitForm} class="smallForm" style="white-space:nowrap">
     <label for="location" >Suggest Location:</label>
     <input type="text" id="location" >
     <button type="submit" class="smallButton">Submit</button>
-  </form>
+  </form> -->
+  <button style="width:auto" class="smallButton" on:click={finish}>Finish</button>
   <table>
     <thead>
       <tr>
@@ -171,7 +193,7 @@ let isSubmitted = false
       </tr>
     </tbody>
   </table>
-  <button style="width:auto" on:click={finish}>Finish</button>
+ 
   
   <style>
     
@@ -181,7 +203,7 @@ let isSubmitted = false
     td {
       border: 1px solid rgb(75, 75, 75);
       padding: 5px;
-      text-align: center;
+      text-align: center
     }
     button {
       width: 100%;
@@ -189,17 +211,19 @@ let isSubmitted = false
       border: none;
       background-color: white;
     }
+
     .smallButton {
-      width: 100px;
-      height: 35px;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: white;
+      text-align: left;
+
     }
 
     th{
       width:100px;
     }
 
-    .smallForm{
-      text-align: left;
-    }
   </style>
   
