@@ -1,3 +1,6 @@
+<!-- https://www.w3schools.com/js/js_syntax.asp was a good resource for javascript sytnax
+ChatGPT was useful in helping debug the code efficiently -->
+
 <script>
   //Radio-based location preferences concept
   import Radio from './Radio.svelte'
@@ -121,12 +124,7 @@ let isSubmitted = false
   }, {
     value: 'orange',
     label: 'Maxwell Dworkin only (Orange)',
-  }
-  // , {
-  //   value: 'yellow',
-  //   label: 'Other (yellow)',
-  // }
-  
+  }  
 ]
 
   //finished function with help from ChatGPT for endtime per user
