@@ -2,7 +2,7 @@
   // based on suggestions from:
   // Sami Keijonen https://webdesign.tutsplus.com/tutorials/how-to-make-custom-accessible-checkboxes-and-radio-buttons--cms-32074
   // and Inclusive Components by Heydon Pickering https://inclusive-components.design/toggle-button/
-
+// all this shows the implementation of the Radio-based location preferences concept, along with its color-based location selection concept, and of couse the radio button implementation 
   export let options;
   export let legend;
   export let userSelected = options[0].value;

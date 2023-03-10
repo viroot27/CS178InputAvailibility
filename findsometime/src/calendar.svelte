@@ -1,4 +1,5 @@
 <script>
+  //Radio-based location preferences concept
   import Radio from './Radio.svelte'
 
 
@@ -31,6 +32,7 @@ let name = "";
 let isSubmitted = false
 
 //  username function with the help of chat GPT
+//simplified ui concept: b) enter name by enter key concept
   function submitForm() {
    setDoc(doc(db, 'user/'+name), {
     start_time : new Date(),
@@ -47,7 +49,7 @@ let isSubmitted = false
 
   )
 }
-
+  ////simplified ui concept: b) enter name by enter key concept
   function submitEnter(event) {
     if (event.key === "Enter") {
       submitForm();
@@ -55,7 +57,7 @@ let isSubmitted = false
   }
 
    
-  
+  //simplified ui concept: (a)simplified-time concept, and click-in availability concept
     export let rows = 21;
     export let cols = 7;
     export let title = 'MeetMe';
@@ -69,10 +71,14 @@ let isSubmitted = false
       { day: 'Saturday', start: '9:00', end: '19:00' },
       { day: 'Sunday', start: '9:00', end: '19:00' }
     ];
+
+    //click-in availability concept and color-based location selection concept
     export let availability = Array.from({ length: rows }, () =>
       Array.from({ length: cols }, () => [false, radioValue])
     );
+    // Radio-based location preferences concept and color-based location selection concept. 
     //If radio value is selected do the radio value color, if not do white
+    //simplified ui concept: alert concept
     function toggleAvailability(row, col) {
       if (name != ""){
       availability[row][col][0] = !availability[row][col][0];
@@ -87,7 +93,7 @@ let isSubmitted = false
     }
   }
     
-  
+    //lick-in availability concept, and simplified ui concept (a)simplified-time concept
     function incrementTime(time, minutes) {
       let [hours, mins] = time.split(':').map(Number);
       mins += minutes;
@@ -96,7 +102,7 @@ let isSubmitted = false
       return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
     }
 
-	
+	//Radio-based location preferences concept: color-based location selection concept
 	const options = [{
 		value: 'green',
 		label: 'Anywhere In Person (Shows in Green)',
@@ -123,7 +129,7 @@ let isSubmitted = false
   
 ]
 
-  //finished function with help from ChatGPT
+  //finished function with help from ChatGPT for endtime per user
   function finish(){
     if (name != ""){
       const ref = doc(db, "user", name)
@@ -145,7 +151,7 @@ let isSubmitted = false
 
   </script> 
   <h1>{title}</h1>
- 
+   <!--simplified ui concept: b) enter name by enter key concept</form> -->
   <form on:submit|preventDefault={submitForm} on:keydown={submitEnter} style="white-space:nowrap">
     <label for="name-input">Name:</label>
     <input type="text" id="name-input" bind:value={name}>
@@ -155,6 +161,7 @@ let isSubmitted = false
   <p> Hello {name} :)</p>
   {/if}
   
+   <!--Radio-based location preferences concept: color-based location selection concept </form> -->
   <Radio {options} fontSize={16} legend='Location Preference for Time Slots:' bind:userSelected={radioValue}/>
   <!-- <form on:submit|preventDefault={submitForm} class="smallForm" style="white-space:nowrap">
     <label for="location" >Suggest Location:</label>
@@ -165,6 +172,7 @@ let isSubmitted = false
   <table>
     <thead>
       <tr>
+        <!-- 3) simplified ui concept (a)simplified-time concept  </form> -->
         <th></th>
         {#each timeSlots as { day }}
         <th>{day}</th>
@@ -174,9 +182,11 @@ let isSubmitted = false
     <tbody>
       {#each Array(rows) as _, row}
       <tr>
+        <!-- 3) simplified ui concept (a)simplified-time concept  </form> -->
         <td>{incrementTime(timeSlots[0].start, row * 30)}</td>
         {#each Array(cols) as _, col}
         <td>
+         <!--  click-in availability concept and color-based location selection concept </form> -->
           <button
             on:click={() => toggleAvailability(row, col)}
             style="background-color:{availability[row][col][1]}"
@@ -211,7 +221,7 @@ let isSubmitted = false
       border: none;
       background-color: white;
     }
-
+  /* Click in availability: Maximize click in concept*/
     .smallButton {
       width: 80px;
       height: 40px;
