@@ -2,7 +2,7 @@
 ChatGPT was useful in helping debug the code efficiently -->
 
 <script>
-  //Radio-based location preferences concept
+  //Location Preference concept
   import Radio from './Radio.svelte'
 
 
@@ -34,8 +34,9 @@ let db = getFirestore(app);
 let name = "";
 let isSubmitted = false
 
-//  username function with the help of chat GPT
-//simplified ui concept: b) enter name by enter key concept
+//  LogIn (Used the help of chat GPT for iteration and development)
+/
+  // SignIn()
   function submitForm() {
    setDoc(doc(db, 'user/'+name), {
     start_time : new Date(),
@@ -46,13 +47,14 @@ let isSubmitted = false
     document.getElementById("name-input").value = "";
     isSubmitted = true
   })
+  // Login: NotSignedInError ()
   .catch((error) => {
     console.log("unsucess")
   }
 
   )
 }
-  ////simplified ui concept: b) enter name by enter key concept
+  //LogIn: SignIn()
   function submitEnter(event) {
     if (event.key === "Enter") {
       submitForm();
@@ -60,7 +62,7 @@ let isSubmitted = false
   }
 
    
-  //simplified ui concept: (a)simplified-time concept, and click-in availability concept
+  //Availability Preference
     export let rows = 21;
     export let cols = 7;
     export let title = 'MeetMe';
@@ -75,13 +77,11 @@ let isSubmitted = false
       { day: 'Sunday', start: '9:00', end: '19:00' }
     ];
 
-    //click-in availability concept and color-based location selection concept
+    //Availability Preference and LocationPreference
     export let availability = Array.from({ length: rows }, () =>
       Array.from({ length: cols }, () => [false, radioValue])
     );
-    // Radio-based location preferences concept and color-based location selection concept. 
-    //If radio value is selected do the radio value color, if not do white
-    //simplified ui concept: alert concept
+    // Location Preference:  Toggled_preference
     function toggleAvailability(row, col) {
       if (name != ""){
       availability[row][col][0] = !availability[row][col][0];
@@ -96,7 +96,7 @@ let isSubmitted = false
     }
   }
     
-    //lick-in availability concept, and simplified ui concept (a)simplified-time concept
+    //Availability Preference 
     function incrementTime(time, minutes) {
       let [hours, mins] = time.split(':').map(Number);
       mins += minutes;
@@ -105,7 +105,7 @@ let isSubmitted = false
       return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
     }
 
-	//Radio-based location preferences concept: color-based location selection concept
+	//Location Preference: Toggled_preference
 	const options = [{
 		value: 'green',
 		label: 'Anywhere In Person (Shows in Green)',
@@ -127,7 +127,8 @@ let isSubmitted = false
   }  
 ]
 
-  //finished function with help from ChatGPT for endtime per user
+  //Avalability Preference
+  //Submit()
   function finish(){
     if (name != ""){
       const ref = doc(db, "user", name)
@@ -149,7 +150,7 @@ let isSubmitted = false
 
   </script> 
   <h1>{title}</h1>
-   <!--simplified ui concept: b) enter name by enter key concept</form> -->
+   <!--LogIn: SignIn() NotSignedInError() -->
   <form on:submit|preventDefault={submitForm} on:keydown={submitEnter} style="white-space:nowrap">
     <label for="name-input">Name:</label>
     <input type="text" id="name-input" bind:value={name}>
@@ -159,32 +160,27 @@ let isSubmitted = false
   <p> Hello {name} :)</p>
   {/if}
   
-   <!--Radio-based location preferences concept: color-based location selection concept </form> -->
+   <!-- Location Preference -->
   <Radio {options} fontSize={16} legend='Location Preference for Time Slots:' bind:userSelected={radioValue}/>
-  <!-- <form on:submit|preventDefault={submitForm} class="smallForm" style="white-space:nowrap">
-    <label for="location" >Suggest Location:</label>
-    <input type="text" id="location" >
-    <button type="submit" class="smallButton">Submit</button>
-  </form> -->
   <button style="width:auto" class="smallButton" on:click={finish}>Finish</button>
   <table>
     <thead>
       <tr>
-        <!-- 3) simplified ui concept (a)simplified-time concept  </form> -->
+         <!-- Availability Preference  -->
         <th></th>
         {#each timeSlots as { day }}
         <th>{day}</th>
         {/each}
       </tr>
     </thead>
+        <!-- Availability Preference -->
     <tbody>
       {#each Array(rows) as _, row}
       <tr>
-        <!-- 3) simplified ui concept (a)simplified-time concept  </form> -->
         <td>{incrementTime(timeSlots[0].start, row * 30)}</td>
         {#each Array(cols) as _, col}
         <td>
-         <!--  click-in availability concept and color-based location selection concept </form> -->
+         <!--  Select Availability() and FillInLocationPreference() </form> -->
           <button
             on:click={() => toggleAvailability(row, col)}
             style="background-color:{availability[row][col][1]}"
@@ -194,10 +190,7 @@ let isSubmitted = false
       </tr>
       {/each}
       <tr>
-        <!-- <td></td>
-        {#each timeSlots as { day, start }}
-        <td>{start} - {incrementTime(start, 60 * rows)}</td>
-        {/each} -->
+  
       </tr>
     </tbody>
   </table>
@@ -219,7 +212,7 @@ let isSubmitted = false
       border: none;
       background-color: white;
     }
-  /* Click in availability: Maximize click in concept*/
+  /* Availability Preference */
     .smallButton {
       width: 80px;
       height: 40px;

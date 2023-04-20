@@ -1,4 +1,4 @@
-<!-- NameInput.svelte -->
+<!-- Login  -->
 
 <script>
     let name = '';
@@ -12,7 +12,7 @@
     Name:
     <input type="text" bind:value={name} />
   </label>
-  
+  <!-- SignIn() -->
   <button on:click={handleSubmit}>
     Submit
   </button>
