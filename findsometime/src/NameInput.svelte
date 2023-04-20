@@ -1,4 +1,4 @@
-<!-- NameInput.svelte ChatGPT was useful in helping find the sytnax for this -->
+<!-- LogIn ChatGPT was useful in helping develop the sytnax for this -->
 
 <script>
     let name = '';
